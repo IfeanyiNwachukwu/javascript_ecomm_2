@@ -31,6 +31,10 @@ class UsersRepository{
         await this.WriteAll(records);
     }
 
+    GetOne = async(Id) => {
+        const records = await this.GetAll();
+        return records.find(record => record.Id === Id);
+    }
 
 
 
@@ -38,15 +42,14 @@ class UsersRepository{
 
 
 
-    async WriteAll(records) {
+    async WriteAll(records) {e
         await fs.promises.writeFile(this.Filename, JSON.stringify(records, null, 2));
     }
 }
 
 const test = async () => {
     const repo = new UsersRepository('users.json');
-    await repo.Create({email: 'musa@gmail.com', password: 'mu1234sa'})
-    const data = await repo.GetAll();
+    const data = await repo.GetOne("1a7a5d4b");
     console.log(data);
 }
 test();
