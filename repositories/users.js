@@ -1,4 +1,4 @@
-const { deepStrictEqual } = require('assert');
+const crypto = require('crypto');
 const fs = require('fs');
 class UsersRepository{
     constructor(filename){
@@ -14,10 +14,15 @@ class UsersRepository{
     }
 
     GetAll = async () => {
-        return await JSON.parse(await fs.promises.readFile(this.Filename));
+        return await JSON.parse(await fs.promises.readFile(this.Filename));   //Note: utf8 is the default encoding
+    }
+
+    RandomId = () => {
+        return crypto.randomBytes(4).toString('hex');
     }
 
     Create = async(attrs) => {
+        attrs.Id = this.RandomId();
         // Get the latest record
         const records = await this.GetAll();
         // push our new record into the existing record
