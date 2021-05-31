@@ -42,6 +42,13 @@ class UsersRepository{
         await this.WriteAll(filteredRecords);
     }
 
+    Update = async(Id,attrs) => {
+        const records = await this.GetAll();
+        const record = records.find(record => record.Id === Id);
+        Object.assign(record,attrs);
+        await this.WriteAll(records);
+    }
+
 
 
 
@@ -55,8 +62,20 @@ class UsersRepository{
 
 const test = async () => {
     const repo = new UsersRepository('users.json');
-    await repo.Delete('9c0542f8');
-    const data = await repo.GetAll();
+    await repo.Update("1a7a5d4b",{email: "musaHermantYadav@gmail.com"});
+    const data = repo.GetOne("1a7a5d4b");
+    const data2 = await repo.GetAll();
     console.log(data);
+    console.log(data2);
+    
+
+    
+
 }
+{email: "musaHermantYadav@gmail.com"}
 test();
+// {
+//     "email": "musa@gmail.com",
+//     "password": "mu1234sa",
+//     "Id": "1a7a5d4b"
+//   },
