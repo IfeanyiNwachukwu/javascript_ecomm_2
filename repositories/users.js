@@ -49,6 +49,22 @@ class UsersRepository{
         await this.WriteAll(records);
     }
 
+    GetOneBy = async (filters) => {
+        const records = await this.GetAll();
+
+        for(let record of records){
+            let found = true;
+            for(let key in filters){
+                if(record[key] !== filters[key]){
+                    found = false;
+                }
+            }
+            if(found){
+                return record;
+            }
+        }
+    }
+
 
 
 
@@ -62,20 +78,11 @@ class UsersRepository{
 
 const test = async () => {
     const repo = new UsersRepository('users.json');
-    await repo.Update("1a7a5d4b",{email: "musaHermantYadav@gmail.com"});
-    const data = repo.GetOne("1a7a5d4b");
-    const data2 = await repo.GetAll();
+    const data =  await repo.GetOneBy({email: "musaHermantYadav@gmail.com"});
     console.log(data);
-    console.log(data2);
     
 
-    
+}  
 
-}
-{email: "musaHermantYadav@gmail.com"}
+
 test();
-// {
-//     "email": "musa@gmail.com",
-//     "password": "mu1234sa",
-//     "Id": "1a7a5d4b"
-//   },
