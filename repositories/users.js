@@ -36,20 +36,27 @@ class UsersRepository{
         return records.find(record => record.Id === Id);
     }
 
+    Delete = async(Id) => {
+        const records = await this.GetAll();
+        const filteredRecords = records.filter(record => record.Id !== Id);
+        await this.WriteAll(filteredRecords);
+    }
 
 
 
 
 
 
-    async WriteAll(records) {e
+
+    async WriteAll(records) {
         await fs.promises.writeFile(this.Filename, JSON.stringify(records, null, 2));
     }
 }
 
 const test = async () => {
     const repo = new UsersRepository('users.json');
-    const data = await repo.GetOne("1a7a5d4b");
+    await repo.Delete('9c0542f8');
+    const data = await repo.GetAll();
     console.log(data);
 }
 test();
