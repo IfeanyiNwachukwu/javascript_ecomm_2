@@ -23,5 +23,15 @@
     "email": "test@test.com",
     "password": "abc123",
     "Id": "0e52aa2e"
+  },
+  {
+    "email": "test2@yahoo.com",
+    "password": "lovem",
+    "Id": "35fde212"
+  },
+  {
+    "email": "testHash@test.com",
+    "password": "3514ac06188903c507942713fefc9caa903aa88e7134fdb4c4867e9940e7ea593d7d1e4dfcf3bcfb2eaa8a8af648926c9dbbb4bb7cbe748f41634c21f2722de0.267296f9d57e2502",
+    "Id": "d80e31b7"
   }
 ]

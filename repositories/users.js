@@ -1,5 +1,8 @@
 const crypto = require('crypto');
 const fs = require('fs');
+const util = require('util');
+const Scrypt = util.promisify(crypto.scrypt);
+
 class UsersRepository{
     constructor(filename){
         if(!filename){
@@ -22,14 +25,21 @@ class UsersRepository{
     }
 
     Create = async(attrs) => {
+        // create salt
+        const salt = crypto.randomBytes(8).toString('hex');
+        // create Hash
+        const buff = await Scrypt(attrs.password,salt,64);
         attrs.Id = this.RandomId();
-        // Get the latest record
+
+        // Create a new record
+        const record = {...attrs,password:`${buff.toString('hex')}.${salt}`};
+        // Get the latest records from DB
         const records = await this.GetAll();
-        // push our new record into the existing record
-        records.push(attrs);
+        // push our new record into the existing records in the DB
+        records.push(record);
         // Write the updated record to disc
         await this.WriteAll(records);
-        return attrs
+        return record;
     }
 
     GetOne = async(Id) => {

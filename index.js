@@ -20,7 +20,7 @@ app.get('/signup',(req,res) => {
 </div>`);
 })
 
-app.post('/',async (req,res) => {   // to avoid copying and pasting this particular line of code everywhere we have a post request.
+app.post('/signup',async (req,res) => {   // to avoid copying and pasting this particular line of code everywhere we have a post request.
     //req.on is similar to an addEventListener but this time it is listening for a data object
     console.log(req.body);
     const {email,password,passwordConfirmation} = req.body;
