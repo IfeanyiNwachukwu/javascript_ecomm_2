@@ -33,5 +33,20 @@
     "email": "testHash@test.com",
     "password": "3514ac06188903c507942713fefc9caa903aa88e7134fdb4c4867e9940e7ea593d7d1e4dfcf3bcfb2eaa8a8af648926c9dbbb4bb7cbe748f41634c21f2722de0.267296f9d57e2502",
     "Id": "d80e31b7"
+  },
+  {
+    "email": "miracle@yahoo.com",
+    "password": "c4792b7350565812d2a51d1bab6950c228405840ef9ba91a9ffa164c7836ba1cac8cef484070626e29767d9a031c4a10fa6b9201765a6ae754f172f6b5f6a393.8618771334aab2ba",
+    "Id": "de5f031c"
+  },
+  {
+    "email": "aba@yahoo.com",
+    "password": "5ede5e0cea5d47d1e2c021c9b78028ec9d227b692c8d55bc8803385f1c43fe7b263873c20e8b663b176f36311a7b3ea6f2d8446f8c2e7d7f41356b3977520aaa.c987d2267433dde0",
+    "Id": "fdac49e9"
+  },
+  {
+    "email": "abia@yahoo.com",
+    "password": "f52ec71d9415ecd771459df9cc1a92fe4de90c81518df5f529aad5e2d939939391918efe258a8ec101a240c49b741610a4c4658467a63d765796a4cfcc8f67ca.7c0cd1de7c6e7f71",
+    "Id": "5577d1f0"
   }
 ]

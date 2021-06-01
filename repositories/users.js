@@ -41,7 +41,15 @@ class UsersRepository{
         await this.WriteAll(records);
         return record;
     }
-
+    ComparePasswords =  async(saved,supplied) => {
+        // saved -> password in our DB
+        // supplied -> password of user about to sign in
+        const [hashed,salt] = saved.split('.');
+        const suppliedPasswordBuf = await Scrypt(supplied,salt,64);
+        console.log(`savedHash : ${hashed}`);
+        console.log(`suppliedHash : ${suppliedPasswordBuf}`);
+        return hashed === suppliedPasswordBuf.toString('hex');
+    }
     GetOne = async(Id) => {
         const records = await this.GetAll();
         return records.find(record => record.Id === Id);
