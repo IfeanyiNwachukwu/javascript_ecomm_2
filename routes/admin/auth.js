@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const usersRepo = require('../../repositories/users');
+const signupTemplate = require('../../views/admin/auth/signup');
+const signinTemplate = require('../../views/admin/auth/signin');
 
 router.get('/signup',(req,res) => {
-    res.send(` <div>
-    
-    <form action="" method="POST">
-        <input  type="email" name="email" id="" placeholder="email">
-        <input type="password" name="password" id="" placeholder="password">
-        <input type="password" name="passwordConfirmation" id="" placeholder="Confirm password">
-        <button>Register</button>
-    </form>
-</div>`);
+    res.send(signupTemplate({req}));
 })
 
 router.post('/signup',async (req,res) => {   // to avoid copying and pasting this particular line of code everywhere we have a post request.
@@ -41,15 +35,7 @@ router.get('/signout', (req,res) => {
 });
 
 router.get('/signin', (req,res) => {
-    res.send(`
-    <div>
-        <form action="" method="POST">
-            <input  type="email" name="email" id="" placeholder="email">
-            <input type="password" name="password" id="" placeholder="password">
-            <button>Sign In</button>
-        </form>
-    </div>
-    `)
+    res.send(signinTemplate());
 });
 
 router.post('/signin',async (req,res) => {
