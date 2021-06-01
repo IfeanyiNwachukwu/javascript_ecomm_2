@@ -29,6 +29,7 @@ class UsersRepository{
         records.push(attrs);
         // Write the updated record to disc
         await this.WriteAll(records);
+        return attrs
     }
 
     GetOne = async(Id) => {
@@ -66,23 +67,9 @@ class UsersRepository{
     }
 
 
-
-
-
-
-
-    async WriteAll(records) {
+  async WriteAll(records) {
         await fs.promises.writeFile(this.Filename, JSON.stringify(records, null, 2));
     }
 }
 
-const test = async () => {
-    const repo = new UsersRepository('users.json');
-    const data =  await repo.GetOneBy({email: "musaHermantYadav@gmail.com"});
-    console.log(data);
-    
-
-}  
-
-
-test();
+module.exports = new UsersRepository('users.json')

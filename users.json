@@ -1,0 +1,27 @@
+[
+  {
+    "email": "ifysmart93@gmail.com",
+    "password": "abc1234",
+    "passwordConfirmation": "abc1234"
+  },
+  {
+    "email": "nwachukwu.ifeanyi@facebook.com",
+    "password": "ghhihj",
+    "Id": "6e25895c"
+  },
+  {
+    "email": "nwachukwu.ifeanyi@facebook.com",
+    "password": "abc123",
+    "Id": "e4b2a57c"
+  },
+  {
+    "email": "gambomaikudi@yahoo.com",
+    "password": "fsfsfsfsf",
+    "Id": "bbdefa90"
+  },
+  {
+    "email": "test@test.com",
+    "password": "abc123",
+    "Id": "0e52aa2e"
+  }
+]
