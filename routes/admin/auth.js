@@ -3,29 +3,26 @@ const router = express.Router();
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const { requireEmail, requirePassword, requirePasswordConfirmation,requireEmailExists,requireValidPasswordForUser } = require('./validators');
 const {check,validationResult} = require('express-validator');
 
 router.get('/signup',(req,res) => {
     res.send(signupTemplate({req}));
 })
 
-router.post('/signup',[check('email').trim().normalizeEmail().isEmail(),
-check('password').trim().isLength({min:4,max:20}),
-check('passwordConfirmation').trim().isLength({min:4,max:20})],async (req,res) => {   // to avoid copying and pasting this particular line of code everywhere we have a post request.
+router.post('/signup',[requireEmail,requirePassword,requirePasswordConfirmation],async (req,res) => {   // to avoid copying and pasting this particular line of code everywhere we have a post request.
     //req.on is similar to an addEventListener but this time it is listening for a data object
-    const errormessages = validationResult(req);
-    console.log(errormessages);
-    console.log(req.body);
-    const {email,password,passwordConfirmation} = req.body;
-    const existingUser = await usersRepo.GetOneBy({email});
-    if(existingUser){
-        res.send('Email in use');
+
+    const errors = validationResult(req);
+    
+    if(!errors.isEmpty()){
+        res.send(signupTemplate({req,errors}));
         return;
     }
-    if(password !== passwordConfirmation){
-         res.send('passwords must match');
-         return;
-    }
+    
+    const {email,password,passwordConfirmation} = req.body;
+    
+    
     // Create a user in our user repo to represent this person
     const user = await usersRepo.Create({email,password});
 
@@ -40,24 +37,30 @@ router.get('/signout', (req,res) => {
 });
 
 router.get('/signin', (req,res) => {
-    res.send(signinTemplate());
+    res.send(signinTemplate({}));
 });
 
-router.post('/signin',async (req,res) => {
-    const {email,password} = req.body;
-    const user = await usersRepo.GetOneBy({email});
-    if(!user){
-        res.send('email does not exist');
-        return;
-    }
-    const validPassword = await usersRepo.ComparePasswords(user.password,password);
-    if(!validPassword){
-        res.send('password is invalid');
-        return;
+router.post('/signin',[requireEmailExists,requireValidPasswordForUser]
+   
+,async (req,res) => {
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if(!errors.isEmpty()){
+        res.send(signinTemplate({errors}))
     }
     
-    req.session.userId = user.Id;
-    res.send('You are signed In');
+    const {email,password} = req.body;
+    const user = await usersRepo.GetOneBy({email});
+
+    if(user){
+        req.session.userId = user.Id;
+        res.send('You are signed In');
+    }
+   
+   
+    
+  
 });
 
 module.exports = router;

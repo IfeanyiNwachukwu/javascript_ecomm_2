@@ -6,6 +6,7 @@ const usersRepo = require('./repositories/users');
 
 const app = express();
 
+app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));  //Global Middleware
 app.use(cookieSession({keys:['hjdjwrjwrwrwwvhfsfnerte']}));
 app.use(authRouter);
