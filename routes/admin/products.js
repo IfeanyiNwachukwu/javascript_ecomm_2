@@ -1,9 +1,15 @@
 const express = require('express');
-const router = express.Router();
+const multer = require('multer');
+
 const productsRepository = require('../../repositories/products');
 const newProductTemplate = require('../../views/admin/products/new');
 const {requireTitle,requirePrice} = require('./validators');
 const {validationResult} = require('express-validator');
+
+
+const router = express.Router();
+const upload = multer({storage: multer.memoryStorage()});
+
 
 router.get('/admin/products',(req,res) => {
 
@@ -14,9 +20,15 @@ router.get('/admin/product/new',(req,res) => {
     res.send(newProductTemplate({}));
 });
 
-router.post('/admin/product/new',[requireTitle,requirePrice],(req,res) => {
+router.post('/admin/product/new',upload.single('image'),[requireTitle,requirePrice],async (req,res) => {
     const errors = validationResult(req);
-    console.log(errors);
+    if(!errors.isEmpty()){
+       return res.send(newProductTemplate({errors}))
+    }
+    const image = req.file.buffer.toString('base64');
+    const {title,price} = req.body;
+    await productsRepository.Create({title,price,image});
+
     res.send('submitted');
 })
 
