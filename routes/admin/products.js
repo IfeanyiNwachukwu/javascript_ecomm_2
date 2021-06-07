@@ -4,6 +4,7 @@ const multer = require('multer');
 const productsRepository = require('../../repositories/products');
 const newProductTemplate = require('../../views/admin/products/new');
 const productListTemplate = require('../../views/admin/products/index');
+const productsEditTemplate = require('../../views/admin/products/edit');
 const {requireTitle,requirePrice} = require('./validators');
 const {handleErrors,requireAuth}  = require('./middlewares');
 
@@ -29,7 +30,12 @@ router.post('/admin/products/new',requireAuth, upload.single('image'),[requireTi
     await productsRepository.Create({title,price,image});
 
     res.redirect('/admin/products');
-})
+});
+
+router.get('/admin/products/:id/edit',async (req,res) =>{
+    const product = await productsRepository.GetOne(req.params.id);
+    res.send(productsEditTemplate({product}));
+});
 
 
 module.exports = router;
