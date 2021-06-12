@@ -17,6 +17,7 @@ router.post('/signup',[requireEmail,requirePassword,requirePasswordConfirmation]
     const user = await usersRepo.Create({email,password});
    // Store the id of that user inside the users cookie
     req.session.userId = user.Id;
+   
     res.redirect('/admin/products');
 });
 

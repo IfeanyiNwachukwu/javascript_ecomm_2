@@ -5,6 +5,7 @@ const productsIndexTemplate = require('../views/products/index');
 
 router.get('/', async(req,res) => {
     const products = await productsRepo.GetAll();
+   
     res.send(productsIndexTemplate({products}));
 })
 

@@ -3,6 +3,7 @@ const layout = require('../layout.js');
 module.exports = ({ products }) => {
   const renderedProducts = products
     .map(product => {
+     
       return `
         <div class="column is-one-quarter">
           <div class="card product-card">
@@ -15,6 +16,7 @@ module.exports = ({ products }) => {
             </div>
             <footer class="card-footer">
               <form action="/cart/products" method="POST">
+               <input name="productId" hidden value ="${product.Id}">
                 <button class="button has-icon is-inverted">
                   <i class="fa fa-shopping-cart"></i> Add to cart
                 </button>
